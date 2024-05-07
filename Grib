@@ -1,0 +1,59 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+
+// Funkcja pomocnicza do odczytu wartości z pliku binarnego
+template <typename T>
+T readBinary(std::ifstream& file) {
+    T value;
+    file.read(reinterpret_cast<char*>(&value), sizeof(T));
+    return value;
+}
+
+// Struktura do przechowywania danych sekcji
+struct SectionData {
+    int length;
+    int version;
+    std::string centre;
+    int processId;
+    int gridId;
+    bool gdsIncluded;
+    bool bmsIncluded;
+    // ... inne pola
+};
+
+// Funkcja do odczytu danych sekcji
+SectionData readSection(std::ifstream& file) {
+    SectionData data;
+    // Odczyt danych sekcji
+    // ...
+    return data;
+}
+
+// Główna funkcja do odczytu pliku GRIB
+void readGribFile(const std::string& filePath) {
+    std::ifstream gribFile(filePath, std::ios::binary);
+    if (!gribFile.is_open()) {
+        std::cerr << "Nie można otworzyć pliku." << std::endl;
+        return;
+    }
+
+    // Odczyt danych GRIB
+    while (!gribFile.eof()) {
+        // Odczytaj dane sekcji
+        SectionData section = readSection(gribFile);
+        // Wyświetl odczytane dane
+        std::cout << "Długość sekcji: " << section.length << std::endl;
+        std::cout << "Wersja tabeli parametrów: " << section.version << std::endl;
+        // ... wyświetlanie innych danych
+    }
+
+    gribFile.close();
+}
+
+int main() {
+    const std::string filePath = "ścieżka_do_pliku.grib1";
+    readGribFile(filePath);
+    return 0;
+}
